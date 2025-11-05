@@ -1,126 +1,147 @@
-/* I've adjusted the original .chat-bar styles 
-  to be flexible and centered on the page for this demo.
-*/
 @import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
-.heading{
-    text-align: center;
-    font-family: "Italiana", sans-serif;
-  font-weight: 400;
-    font-size: 64px;
-    position: absolute;
-    top: 20%;
-    left: 35%;
-    color: white;
-}
-.subheading{
-    margin: 30px;
-    text-align: center;
-    font-family: 'Arial', sans-serif;
-    font-size: 23px;
-    position: absolute;
-    top: 28%;
-    left: 34%;
-    color: white;
-}
-.chat-bar {
-  display: flex; /* Arranges items in a row */
-  flex-direction: column;
-  
-  width: 90%; /* Use a relative width */
-  max-width: 800px; /* Set a max-width for large screens */
-  height: 20%; /* A more standard height for an input bar */
-  position:absolute;
-  /* Centering the bar on the page */
-  margin: 40px auto; 
-  bottom: 30%;
-  left: 35%;
-  /* Appearance */
-  background-color: rgba(0, 0, 0,0.4); /* Dark purple, sampled from your image */
-  border-radius: 12px; /* Rounded corners */
-  padding: 0 16px; /* Padding on the left and right */
-  border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Soft shadow */
-}
 
-/* This div holds the left icon group */
-.left-icons {
+.chat-container {
   display: flex;
-  align-items: center;
-  gap: 8px; /* Adds space *between* the icons */
-  margin-bottom: 10px;
+  flex-direction: column;
+  height: 100vh; 
+  flex-grow: 1; 
 }
 
-/* This styles all icon buttons (both left and right) 
-*/
-.icon-button {
-  background: transparent; /* No background color */
-  border: none; /* No border */
-  cursor: pointer;
-  color: #9b9b9b; /* Muted color for icons */
-  padding: 8px; /* Makes the click area larger */
-  display: flex; /* Helps center the icon inside */
-  align-items: center;
-  justify-content: center;
-  opacity: 0.6; /* Slightly faded look */
-  border-radius: 6px;
-  transition: all 0.2s ease; /* Smooth hover effect */
-}
-
-.icon-button:hover {
-  color: #ffffff; /* Bright white on hover */
-  opacity: 1; /* Fully opaque on hover */
-  background-color: rgba(255, 255, 255, 0.08); /* Faint background glow */
-}
-
-/* This is the key to the layout.
-  The input field will grow to fill all available space.
-*/
-.chat-input {
-  flex-grow: 1; /* Makes the input take up the remaining space */
-  background: transparent; /* Fully transparent background */
-  border: none; /* No border */
-  outline: none; /* No ugly blue glow on click */
-  
-  /* Text styling */
-  color: #ececec; /* Light text color for typing */
-  font-size: 1rem; /* 16px */
-  
-  /* Add space between icons and text */
-  padding: 0 12px; 
-}
-
-/* Style the placeholder text */
-.chat-input::placeholder {
-  color: #9b9b9b; /* Same as icon color */
-  opacity: 1; /* Ensure it's fully visible */
-}
-.file-upload-button {
- position: relative;
- left: 78%
-}
-
-.navbar{
+.navbar {
   width: 100%;
-  display:flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1rem 2rem;
+
+  position: sticky;
+  top: 0;
+  /* z-index: 10; 
+  background-color: #1F2035;  */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
 }
 
-.navbar span{
-  margin: 1rem 2rem;
+.navbar span {
+  font-size: 1.5rem;
+  margin: 0;
 }
 
-.userIconDiv{
-  margin: 1rem 2rem;
+.userIconDiv {
+  margin: 0;
 }
 
-.userIcon{
-  background-color:rgb(52, 39, 54);
+.userIcon {
+  background-color: rgb(52, 39, 54);
   height: 25px;
   width: 25px;
   border-radius: 50%;
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+
+.chat-content {
+  flex-grow: 1;
+  overflow-y: auto; 
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center; 
+  text-align: center;
+  padding: 0 2rem; 
+}
+.heading {
+  font-family: "Italiana", sans-serif;
+  font-weight: 400;
+  font-size: 64px;
+  color: white;
+  margin-top: 0;
+  margin-bottom: 30px; 
+}
+
+.subheading {
+  margin: 0 0 50px 0;
+  font-family: 'Arial', sans-serif;
+  font-size: 23px;
+  color: white;
+  /* Removed absolute positioning for normal flow */
+}
+
+/* 4. Input Area: Sticky to the bottom */
+.chat-input-area {
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  padding: 20px;
+  
+  /* Use a background that blends with the app background when sticky */
+  /* background: linear-gradient(to top, #1F2035 50%, rgba(31, 32, 53, 0.95) 100%); */
+}
+
+.chat-bar {
+  display: flex; 
+  flex-direction: row; 
+  align-items: center; 
+  
+  width: 90%;
+  max-width: 800px; 
+  height: auto; 
+  /* Center the bar horizontally */
+  margin: 0 auto; 
+  
+  background-color: rgba(0, 0, 0,0.4); 
+  border-radius: 12px;
+  padding: 8px 16px; 
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  
+  position: static;
+  bottom: auto;
+  left: auto;
+}
+
+.left-icons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0;
+}
+
+.icon-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #9b9b9b;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.icon-button:hover {
+  color: #ffffff;
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.chat-input {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  
+  color: #ececec;
+  font-size: 1rem;
+  
+  padding: 0 12px;
+}
+
+.chat-input::placeholder {
+  color: #9b9b9b;
+  opacity: 1;
 }
