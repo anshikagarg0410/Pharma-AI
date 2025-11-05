@@ -52,11 +52,21 @@ body {
   background-repeat: no-repeat;
   
   display: flex;
+  animation: moveGradient 6s infinite;
 }
 
 /* ADDED: Class to handle when the sidebar is collapsed */
 /* This is primarily a placeholder for global adjustments if needed, 
    but it's good practice to include the class that the JS applies. */
-.app.collapsed .chat-window {
-    /* Adjustments for the main content area when sidebar is minimized can go here */
+
+@keyframes moveGradient {
+  0% {
+    background-position: 0% 50%; /* Start at the far left */
+  }
+  50% {
+    background-position: 100% 50%; /* Move to the far right */
+  }
+  100% {
+    background-position: 0% 50%; /* Move back to the start */
+  }
 }

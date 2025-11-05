@@ -2,6 +2,7 @@ import './App.css'
 import Sidebar from './Sidebar.jsx';
 import ChatWindow from './ChatWindow.jsx';
 import {MyContext} from "./MyContext.jsx";
+import ProfilePage from './ProfilePage.jsx'
 import { useState } from 'react'; // Import useState
 
 function App() {
@@ -19,12 +20,14 @@ function App() {
   const [reply, setReply] = useState(null);
   // MOVED: Message history state is moved from ChatWindow to App
   const [messages, setMessages] = useState([]); 
+  const [currentView, setCurrentView] = useState("chat"); // 'chat' or 'profile'
 
   // NEW FUNCTION: Resets all chat-related states
   const newChat = () => {
     setPrompt("");
     setReply(null);
-    setMessages([]); // Clear messages to show the welcome screen
+    setMessages([]); 
+    setCurrentView("chat");
   };
 
 
@@ -39,7 +42,9 @@ function App() {
     // Pass message history and reset function
     messages,
     setMessages,
-    newChat // Pass the new function
+    newChat, // Pass the new function
+    currentView,
+    setCurrentView
   };
   
   return (
@@ -47,7 +52,11 @@ function App() {
     <div className={`app ${isCollapsed ? 'collapsed' : ''}`}> 
       <MyContext.Provider value={providerValues}>
         <Sidebar></Sidebar>
-        <ChatWindow></ChatWindow>
+        {currentView === 'chat' ? (
+            <ChatWindow />
+        ) : (
+            <ProfilePage />
+        )}
       </MyContext.Provider>
       
     </div >

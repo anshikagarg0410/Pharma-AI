@@ -1,0 +1,119 @@
+.profile-page-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; 
+    flex-grow: 1; 
+    padding: 1rem 2rem;
+    overflow-y: auto;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    position: sticky;
+    top: 0;
+    padding-top: 1rem;
+    background: transparent; /* Match app background from App.css */
+    z-index: 10;
+}
+
+.profile-header h1 {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+/* Re-use icon button styles from ChatWindow.css */
+.back-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #9b9b9b;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.back-button:hover {
+    color: #ffffff;
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.profile-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem 0;
+    width: 100%;
+}
+
+.profile-card {
+    background-color: rgba(0, 0, 0, 0.2); /* Match chat-bar style */
+    border-radius: 12px;
+    padding: 2rem 2.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 2rem;
+}
+
+.profile-info-group {
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.profile-info-group label {
+    display: block;
+    font-size: 0.9rem;
+    color: #b4b4b4; /* Match sidebar text color */
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+.profile-info-group input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 12px 10px;
+    font-size: 1rem;
+    color: #ececec;
+}
+
+.logout-button {
+    margin-top: 1rem;
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #f7baba;
+    background-color: rgba(205, 24, 208, 0.5);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.logout-button:hover {
+    background-color:rgba(205, 24, 208, 0.9);
+    color: #ffffff;
+}
