@@ -1,27 +1,3 @@
-// import './App.css'
-// import Sidebar from './Sidebar.jsx';
-// import ChatWindow from './ChatWindow.jsx';
-// import {MyContext} from "./MyContext.jsx";
-// import { useState } from 'react';
-// function App() {
-//   // const [prompt,setPrompt]=useState("");
-//   // const [reply,setReply]=useState(null);
-//   // const providerValues={}={
-//   //   prompt,setPrompt,
-//   //   reply,setReply,
-//   // }//passing values
-//   return (
-//     <div className='app'>
-//       {/* <MyContext.Provider values={providerValues}> */}
-//         <Sidebar></Sidebar>
-//         <ChatWindow></ChatWindow>
-//       {/* </MyContext.Provider> */}
-      
-//     </div >
-//   )
-// }
-
-// export default App
 import './App.css'
 import Sidebar from './Sidebar.jsx';
 import ChatWindow from './ChatWindow.jsx';
@@ -38,15 +14,38 @@ function App() {
     setIsCollapsed(prev => !prev);
   };
 
+  // State for chat functionality
+  const [prompt, setPrompt] = useState("");
+  const [reply, setReply] = useState(null);
+  // MOVED: Message history state is moved from ChatWindow to App
+  const [messages, setMessages] = useState([]); 
+
+  // NEW FUNCTION: Resets all chat-related states
+  const newChat = () => {
+    setPrompt("");
+    setReply(null);
+    setMessages([]); // Clear messages to show the welcome screen
+  };
+
+
   const providerValues={ 
-    isSidebarCollapsed: isCollapsed, // Pass state
-    toggleSidebar: toggleSidebar     // Pass function
+    isSidebarCollapsed: isCollapsed, 
+    toggleSidebar: toggleSidebar,     
+    // Pass chat state
+    prompt,
+    setPrompt,
+    reply,
+    setReply,
+    // Pass message history and reset function
+    messages,
+    setMessages,
+    newChat // Pass the new function
   };
   
   return (
     // Apply a class name to the app wrapper based on the collapsed state
     <div className={`app ${isCollapsed ? 'collapsed' : ''}`}> 
-      <MyContext.Provider value={providerValues}> {/* Changed 'values' to 'value' */}
+      <MyContext.Provider value={providerValues}>
         <Sidebar></Sidebar>
         <ChatWindow></ChatWindow>
       </MyContext.Provider>

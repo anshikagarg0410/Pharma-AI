@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; 
+  flex-grow: 1; 
+}
+/* ... existing .navbar and .userIconDiv styles ... */
+
+.navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+
+  position: sticky;
+  top: 0;
+  /* z-index: 10; 
+  background-color: #1F2035;  */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.navbar span {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.userIconDiv {
+  margin: 0;
+}
+
+.userIcon {
+  background-color: rgb(52, 39, 54);
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.chat-content {
+  flex-grow: 1;
+  overflow-y: auto; 
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center initial headings */
+  justify-content: center; /* Center initial headings vertically */
+  text-align: center;
+  padding: 0 2rem; 
+}
+.heading {
+  font-family: "Italiana", sans-serif;
+  font-weight: 400;
+  font-size: 64px;
+  color: white;
+  margin-top: 0;
+  margin-bottom: 30px; 
+}
+
+.subheading {
+  margin: 0 0 50px 0;
+  font-family: 'Arial', sans-serif;
+  font-size: 23px;
+  color: white;
+  /* Removed absolute positioning for normal flow */
+}
+
+/* ------------------- Chat Messages Styling ------------------- */
+
+.message-history {
+    width: 100%;
+    /* Max width of the overall chat area to contain messages */
+    max-width: 1000px; 
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0; /* Add top/bottom padding to message history */
+    align-items: center; /* Center message wrappers */
+    justify-content: flex-start; /* Start from the top */
+    min-height: 100%; /* Important: Makes sure it fills space for centering on first load */
+}
+
+/* Wrapper to control alignment of the message bubble within the history flow */
+.chat-message-wrapper {
+    width: 100%;
+    display: flex; /* Use flex to control alignment inside the wrapper */
+    margin: 10px 0; /* Vertical spacing between messages */
+    padding: 0 20px; /* Horizontal padding for the wrapper */
+}
+
+/* Alignment Classes */
+.user-align {
+    justify-content: flex-end; /* Pushes the message bubble to the right */
+}
+
+.ai-align {
+    justify-content: flex-start; /* Keeps the message bubble to the left (default) */
+}
+
+/* Actual Message Bubble Styles */
+.chat-message {
+    max-width: 600px; /* Max width of the bubble itself */
+    min-width: 100px;
+    padding: 12px 18px;
+    border-radius: 18px; 
+    text-align: left;
+    word-wrap: break-word; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.message-header strong {
+    font-size: 0.8rem;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.message-text {
+    font-size: 1rem;
+    color: white;
+}
+
+/* User (Input) Styles: Darker background, white text */
+.chat-message.user {
+    background-color: #3b3a4a; /* User message background (Dark Gray/Blue) */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #f0f0f0;
+    /* Optional: Small alignment fix for the bubble text */
+    text-align: right; 
+}
+.chat-message.user .message-header strong {
+    color: #a0a0a0; /* Header color for user */
+    text-align: right;
+}
+
+/* AI (Output) Styles: Dark Blue background, white text, distinct border */
+.chat-message.ai {
+    background-color: #191929; /* AI message background (Very Dark Blue/Black) */
+    border: 1px solid rgba(60, 145, 244, 0.4); /* Blue accent border */
+    color: #e0e0e0;
+}
+
+.chat-message.ai .message-header strong {
+    color: #c5d6ff; /* Header color for AI (Light Blue) */
+}
+
+
+/* 4. Input Area: Sticky to the bottom */
+.chat-input-area {
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  padding: 20px;
+  
+  /* Use a background that blends with the app background when sticky */
+  /* background: linear-gradient(to top, #1F2035 50%, rgba(31, 32, 53, 0.95) 100%); */
+}
+
+.chat-bar {
+  display: flex; 
+  flex-direction: row; 
+  align-items: center; 
+  
+  width: 90%;
+  max-width: 800px; 
+  height: auto; 
+  /* Center the bar horizontally */
+  margin: 0 auto; 
+  
+  background-color: rgba(0, 0, 0,0.4); 
+  border-radius: 12px;
+  padding: 8px 16px; 
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  
+  position: static;
+  bottom: auto;
+  left: auto;
+}
+
+.left-icons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0;
+}
+
+.icon-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #9b9b9b;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.icon-button:hover {
+  color: #ffffff;
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.chat-input {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  
+  color: #ececec;
+  font-size: 1rem;
+  
+  padding: 0 12px;
+}
+
+.chat-input::placeholder {
+  color: #9b9b9b;
+  opacity: 1;
+}

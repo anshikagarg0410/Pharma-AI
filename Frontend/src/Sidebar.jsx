@@ -1,11 +1,11 @@
 import "./Sidebar.css";
-import { useContext } from 'react'; // Import useContext
-import { MyContext } from "./MyContext.jsx"; // Import MyContext
+import { useContext } from 'react'; 
+import { MyContext } from "./MyContext.jsx"; 
 
 function Sidebar(){
     
-    // Consume context values
-    const { isSidebarCollapsed, toggleSidebar } = useContext(MyContext);
+    // Consume context values, including the newChat function
+    const { isSidebarCollapsed, toggleSidebar, newChat } = useContext(MyContext);
 
     return(
         // Apply 'collapsed' class based on state
@@ -18,8 +18,8 @@ function Sidebar(){
 
             {/* Main top buttons area (New Chat and Search Chats) */}
             <div className="top-actions-container">
-                {/* New Chat Button */}
-                <button className="button new-chat-button">
+                {/* New Chat Button: onClick calls newChat() */}
+                <button className="button new-chat-button" onClick={newChat}>
                     <i className="fa-solid fa-pen-to-square"></i>
                     {!isSidebarCollapsed && <span>New chat</span>} 
                 </button>
