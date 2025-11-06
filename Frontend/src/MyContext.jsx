@@ -11,4 +11,8 @@ export const MyContext = createContext({
     setReply: () => {},
     // New feature: function to reset the chat
     newChat: () => {},
+    
+    // ADD THESE NEW LINES
+    currentView: "chat", // Default view is 'chat'
+    setCurrentView: () => {}, // Function to change the view
 });

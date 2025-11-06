@@ -12,7 +12,8 @@ function ChatWindow() {
     prompt, 
     setPrompt, 
     messages, // Consumed from context
-    setMessages, // Consumed from context
+    setMessages,
+    setCurrentView 
   } = useContext(MyContext); 
   
   // State to hold the history of messages (REMOVED: Was moved to App.jsx)
@@ -48,7 +49,7 @@ function ChatWindow() {
     <div className="chat-container">
       <div className="navbar">
         <span>Pharma AI</span>
-        <div className="userIconDiv">
+        <div className="userIconDiv" onClick={() => setCurrentView('profile')}>
           <span className="userIcon"><i className="fa-solid fa-user"></i></span>
         </div>
       </div>

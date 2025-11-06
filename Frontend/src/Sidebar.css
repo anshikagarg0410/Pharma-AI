@@ -46,7 +46,7 @@
     margin-bottom: 5px; /* Slight bottom margin */
     border-radius: 5px;
     background-color: transparent !important;
-    border: solid 1px rgba(255, 255, 255, 0.5); 
+    border: none; 
     transition: all 0.3s ease-in-out; 
     cursor: pointer; 
     justify-content: flex-start;
