@@ -1,4 +1,4 @@
-/* MoleculeComparison.css - Complete Redesign */
+/* MoleculeComparison.css */
 
 @keyframes float {
   0%, 100% {
@@ -39,19 +39,32 @@
   }
 }
 
+/* Animation for Upward Dropdown */
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .molecule-page {
   display: flex;
-  gap: 1rem; /* Reduced gap from 2rem */
-  padding: 1rem; /* Reduced padding from 2.5rem */
+  gap: 1rem;
+  padding: 1rem;
   min-height: 100vh;
-  background:TX;
+  /* REVERTED: Changed back to deep dark purple base to restore purplish-pink theme */
+  background: #1a1a2e; 
   color: #e9e6ef;
   font-family: Roboto, "Open Sans", Helvetica, sans-serif;
   position: relative;
   overflow: hidden;
 }
 
-/* Ambient Background Effects */
+/* Ambient Background Effects - These will now be visible against the dark background */
 .bg-gradient-1 {
   position: absolute;
   top: -20%;
@@ -72,7 +85,7 @@
   right: -5%;
   width: 450px;
   height: 450px;
-  background: radial-gradient(circle, rgba(118, 75, 162, 0.05) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(118, 75, 162, 0.08) 0%, transparent 70%); /* Slightly increased opacity for purple */
   border-radius: 50%;
   filter: blur(60px);
   pointer-events: none;
@@ -96,18 +109,20 @@
 
 /* LEFT PANEL */
 .molecule-left {
-  width: 280px; /* Reduced width from 340px */
+  width: 280px;
   min-height: 640px;
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(20px);
   border-radius: 16px;
-  padding: 1.5rem; /* Reduced padding */
+  padding: 1.5rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 
               inset 0 0 0 1px rgba(255, 255, 255, 0.05);
   position: relative;
   z-index: 1;
   transition: all 0.3s ease;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .panel-glow {
@@ -123,7 +138,7 @@
 
 .title {
   margin: 0 0 1.5rem 0;
-  font-size: 1.25rem; /* Slightly smaller title */
+  font-size: 1.25rem;
   font-weight: 600;
   color: #ffffff;
   display: flex;
@@ -216,6 +231,7 @@
 .molecule-list-container {
   position: relative;
   margin-bottom: 1.5rem;
+  flex: 1;
 }
 
 .molecule-list-container.fade-out .molecule-list {
@@ -348,23 +364,34 @@
   transform: translateY(2px);
 }
 
-/* View Differences Button */
-.view-differences-button {
-  margin-top: 1rem;
+/* View Differences Button & Split Dropdown Styles */
+.view-diff-group {
+  display: flex;
   width: 100%;
+  position: relative;
+  margin-top: auto;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  border-radius: 10px;
+  z-index: 50;
+}
+
+.view-differences-button {
+  flex: 1;
+  width: auto; 
   padding: 0.875rem 1.25rem;
+  /* Gradient kept as Blue to Purple for the "Purplish Pink" theme */
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #ffffff;
   font-weight: 600;
   font-size: 0.9rem;
-  border-radius: 10px;
+  border-radius: 10px 0 0 10px;
   border: none;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
   letter-spacing: 0.5px;
   position: relative;
   overflow: hidden;
+  z-index: 2;
 }
 
 .view-differences-button::before {
@@ -384,8 +411,6 @@
 
 .view-differences-button:hover:not(.disabled) {
   background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
 .view-differences-button:hover:not(.disabled)::before {
@@ -396,50 +421,93 @@
   opacity: 0.4;
   cursor: not-allowed;
   background: rgba(102, 126, 234, 0.2);
-  box-shadow: none;
 }
 
-.view-differences-button:active:not(.disabled) {
-  transform: translateY(0);
-  box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
-}
-
-/* Chart Options */
-.chart-options {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-top: 1rem;
-  animation: fadeIn 0.4s ease-out;
-}
-
-.chart-option-button {
-  width: 100%;
-  padding: 0.75rem 1.25rem;
-  background: rgba(118, 75, 162, 0.12);
-  border: 1px solid rgba(118, 75, 162, 0.25);
-  border-radius: 10px;
-  color: #e9e6ef;
-  font-size: 0.9rem;
-  font-weight: 500;
+/* Dropdown Toggle Arrow Button */
+.dropdown-toggle-button {
+  width: 48px;
+  padding: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  border: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0 10px 10px 0;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+  z-index: 2;
 }
 
-.chart-option-button:hover {
-  background: rgba(118, 75, 162, 0.2);
-  border-color: rgba(118, 75, 162, 0.4);
-  transform: translateX(4px);
-  box-shadow: 0 4px 12px rgba(118, 75, 162, 0.2);
+.dropdown-toggle-button:hover:not(.disabled) {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
 }
 
-.chart-icon {
-  font-size: 1.25rem;
+.dropdown-toggle-button.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: rgba(102, 126, 234, 0.2);
+  border-left-color: rgba(255, 255, 255, 0.05);
+}
+
+.arrow-icon {
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.arrow-icon.open {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Menu - Upward Opening */
+.view-options-dropdown {
+  position: absolute;
+  bottom: 100%;
+  top: auto;
+  right: 0;
+  left: 0;
+  margin-bottom: 8px;
+  margin-top: 0;
+  background: rgba(30, 30, 40, 0.98);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.4);
+  animation: slideUpFade 0.2s ease-out;
+}
+
+.dropdown-item {
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  color: #e9e6ef;
+  font-size: 0.9rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item:hover {
+  background: rgba(102, 126, 234, 0.2);
+  color: #ffffff;
+  padding-left: 20px;
+}
+
+.dropdown-item .icon {
+  font-size: 1.1rem;
 }
 
 /* RIGHT MAIN AREA */
@@ -449,14 +517,14 @@
   background: rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(20px);
   border-radius: 16px;
-  padding: 1.5rem; /* Reduced padding from 2.5rem */
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   position: relative;
   z-index: 1;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2),
               inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-  overflow-x: hidden; /* Prevent parent scroll */
+  overflow-x: hidden;
 }
 
 .main-glow {
@@ -538,7 +606,6 @@
 /* Header Row */
 .table-header {
   display: grid;
-  /* CHANGED: Reduced feature column and gap */
   grid-template-columns: 140px 1fr 1fr; 
   gap: 1rem;
   align-items: center;
@@ -600,15 +667,15 @@
   text-overflow: ellipsis;
 }
 
-/* Differences Container with Animation */
+/* Differences Container */
 .differences-container {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   max-height: 600px;
-  overflow-y: auto; /* Allow vertical scroll if needed */
+  overflow-y: auto;
   overflow-x: hidden;
-  padding-right: 5px; /* Space for scrollbar */
+  padding-right: 5px;
 }
 
 .differences-container.fade-out {
@@ -622,7 +689,6 @@
 /* Table Rows */
 .table-row {
   display: grid;
-  /* CHANGED: Match header columns */
   grid-template-columns: 140px 1fr 1fr;
   gap: 1rem;
   align-items: start;
@@ -654,7 +720,7 @@
 .content-col {
   display: flex;
   align-items: stretch;
-  min-width: 0; /* Important for grid item wrapping */
+  min-width: 0;
 }
 
 .content-card {
@@ -667,10 +733,9 @@
   font-size: 0.85rem;
   color: #e6e3ea;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: background 0.3s ease,QH border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
-  /* CRITICAL FIX for wrapping */
   word-break: break-word; 
   overflow-wrap: break-word;
 }
@@ -886,8 +951,6 @@
 .molecule-right::-webkit-scrollbar-thumb:hover {
   background: rgba(102, 126, 234, 0.5);
 }
-
-/* Add these to Frontend/src/MoleculeComparison.css */
 
 .chart-container {
   width: 100%;

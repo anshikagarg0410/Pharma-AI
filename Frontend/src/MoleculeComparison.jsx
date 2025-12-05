@@ -33,6 +33,7 @@ export default function MoleculeComparison() {
   // View States
   const [viewDifferences, setViewDifferences] = useState(false);
   const [visualizationMode, setVisualizationMode] = useState("text"); // 'text', 'bar', 'radar'
+  const [showDropdown, setShowDropdown] = useState(false); // Dropdown state
   
   // Data States
   const [differences, setDifferences] = useState([]);
@@ -110,6 +111,7 @@ export default function MoleculeComparison() {
     setDifferences([]);
     setRawData(null);
     setError(null);
+    setShowDropdown(false);
   };
 
   const addMolecule = () => {
@@ -169,7 +171,8 @@ export default function MoleculeComparison() {
     return formattedDifferences;
   };
 
-  const handleViewDifferences = async () => {
+  const handleViewDifferences = async (targetMode = "text") => {
+    const mode = typeof targetMode === 'string' ? targetMode : "text";
     const selectedNames = getSelectedMoleculeNames();
     
     if (selectedNames.length < 2) {
@@ -177,10 +180,17 @@ export default function MoleculeComparison() {
       return;
     }
 
+    setShowDropdown(false);
+
+    if (differences.length > 0 && viewDifferences) {
+        setVisualizationMode(mode);
+        return;
+    }
+
     setLoading(true);
     setError(null);
     setViewDifferences(true);
-    setVisualizationMode("text"); // Default to text view
+    setVisualizationMode(mode);
     setExpandedTexts({});
 
     try {
@@ -194,7 +204,7 @@ export default function MoleculeComparison() {
 
       const data = await response.json();
       
-      setRawData(data.molecules_data); // SAVE RAW DATA FOR CHARTS
+      setRawData(data.molecules_data);
       const formattedDiffs = formatDifferenceData(data.molecules_data, selectedNames);
       setDifferences(formattedDiffs);
       setCurrentDiffIndex(0);
@@ -256,8 +266,6 @@ export default function MoleculeComparison() {
 
     if (!d1 || !d2) return [];
 
-    // Helper to normalize values (simple logic for demo: value / max_expected * 100)
-    // You might want to adjust max_expected based on real data ranges
     const normalize = (val, max) => Math.min(100, Math.round((val / max) * 100));
 
     return [
@@ -275,7 +283,7 @@ export default function MoleculeComparison() {
       },
       {
         subject: "Market Share",
-        A: normalize(d1.market?.global_therapy_area_market_size_usd || 0, 10000000000), // 10B max
+        A: normalize(d1.market?.global_therapy_area_market_size_usd || 0, 10000000000), 
         B: normalize(d2.market?.global_therapy_area_market_size_usd || 0, 10000000000),
         fullMark: 100,
       },
@@ -494,25 +502,39 @@ export default function MoleculeComparison() {
           {currentPage < totalPages - 1 && <button className="pagination-arrow arrow-down" onClick={handleNextPage}><span>▼</span></button>}
         </div>
 
-        <button className={`view-differences-button ${!canViewDifferences ? "disabled" : ""}`} onClick={handleViewDifferences} disabled={!canViewDifferences || loading}>
-          {loading ? "Loading..." : "View Differences"}
-        </button>
+        {/* REPLACED SINGLE BUTTON WITH SPLIT DROPDOWN GROUP */}
+        <div className="view-diff-group">
+          <button 
+            className={`view-differences-button main-btn ${!canViewDifferences ? "disabled" : ""}`} 
+            onClick={() => handleViewDifferences("text")} 
+            disabled={!canViewDifferences || loading}
+          >
+            {loading ? "Loading..." : "View Differences"}
+          </button>
+          
+          <button 
+            className={`dropdown-toggle-button ${!canViewDifferences ? "disabled" : ""}`}
+            onClick={() => setShowDropdown(!showDropdown)}
+            disabled={!canViewDifferences || loading}
+          >
+            <span className={`arrow-icon ${showDropdown ? 'open' : ''}`}>▼</span>
+          </button>
+          
+          {showDropdown && (
+            <div className="view-options-dropdown">
+               <button className="dropdown-item" onClick={() => handleViewDifferences("text")}>
+                 <span className="icon">📝</span> Table View
+               </button>
+               <button className="dropdown-item" onClick={() => handleViewDifferences("bar")}>
+                 <span className="icon">📊</span> Bar Graph
+               </button>
+               <button className="dropdown-item" onClick={() => handleViewDifferences("radar")}>
+                 <span className="icon">🎯</span> Radar Chart
+               </button>
+            </div>
+          )}
+        </div>
 
-        {viewDifferences && differences.length > 0 && (
-          <div className="chart-options">
-            <button className={`chart-option-button ${visualizationMode === 'bar' ? 'active' : ''}`} onClick={() => setVisualizationMode("bar")}>
-              <span className="chart-icon">📊</span> View Bar Graph
-            </button>
-            <button className={`chart-option-button ${visualizationMode === 'radar' ? 'active' : ''}`} onClick={() => setVisualizationMode("radar")}>
-              <span className="chart-icon">🎯</span> View Radar Chart
-            </button>
-            {visualizationMode !== 'text' && (
-              <button className="chart-option-button" onClick={() => setVisualizationMode("text")}>
-                <span className="chart-icon">📝</span> View Table
-              </button>
-            )}
-          </div>
-        )}
       </aside>
 
       <main className="molecule-right">
@@ -529,7 +551,6 @@ export default function MoleculeComparison() {
               )}
             </div>
           ) : (
-            // CONDITIONAL RENDERING BASED ON VIEW MODE
             <>
               {visualizationMode === 'text' && renderTextComparison(selectedNames)}
               {visualizationMode === 'bar' && renderBarChart()}
